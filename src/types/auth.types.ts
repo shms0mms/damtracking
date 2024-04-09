@@ -1,11 +1,17 @@
-export interface AuthFormData {}
-
-export interface User {
+export type UserRole = "company" | "customer"
+export interface User extends UserCreate {
 	id: number
+}
+export interface UserLogin {
+	password: string
+	username: string
+}
+export interface UserCreate {
+	email: string
 	username: string
 	first_name: string
 	second_name: string
 	third_name: string
 	password: string
-	role: "company" | "customer" // Компания или покупатель
+	role: UserRole // Компания или покупатель
 }

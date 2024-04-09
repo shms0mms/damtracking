@@ -1,5 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "./normalize.scss";
+#root,
+html,
+body {
+	@apply w-full h-full;
+}
+body {
+	@apply text-main bg-white;
+}
 
-@import url("normalize.scss");
+.field {
+	@apply font-normal text-sm py-[14px] px-4 rounded-md bg-light;
+}

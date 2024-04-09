@@ -1,7 +1,6 @@
 import type { Metadata } from "next"
-import "./styles/globals.scss"
 import { inter } from "@/styles/fonts"
-
+import "../styles/globals.scss"
 export const metadata: Metadata = {
 	title: "Damtracking",
 	description: "service for find a paths",
