@@ -82,4 +82,4 @@ async def update_user(  data:UpdateUser,user:User = Depends(get_current_user),co
         await connection.commit()
         
         
-        return True        
+        return user        

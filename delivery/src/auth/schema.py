@@ -1,7 +1,7 @@
 from typing import Optional
 from pydantic import BaseModel
 
-
+from .models import Company
 
 
 class UserCreate(BaseModel):
@@ -20,7 +20,7 @@ class UserCreate(BaseModel):
         
         password:str|bytes
         
-        company:bool  
+        company:Company  
 
 class UserAuth(BaseModel):
         

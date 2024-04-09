@@ -1,4 +1,5 @@
 from fastapi import Depends, FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from .db import engine, Base
 
 from .auth.router import app  as auth_app
@@ -16,4 +17,5 @@ async def create():
     await create_db()
     return True
 
-
+origins = ['*']
+app.add_middleware(CORSMiddleware,allow_origins=origins, allow_headers=["*"], allow_methods=["*"])

@@ -16,6 +16,8 @@ class BdConfing(BaseSettings):
     
     
     
+    
+    
 class Config(BaseModel):
     
     bd:BdConfing = BdConfing()
