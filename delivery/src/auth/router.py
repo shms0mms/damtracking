@@ -43,17 +43,17 @@ async def register(data:UserCreate, session:AsyncSession = Depends(get_session))
         
         await session.commit()        
             
-        return token
+        return {"token": token }
 
 @app.post("/login")
 async def auth(data:UserAuth,session:AsyncSession = Depends(get_session)):
     
-    user = await session.scalar(select(User).where(User.username == data.username))
+    user = await session.scalar(select(User).where(User.email == data.email))
     
     if user:
         if check_password(data.password, user.password):
                     token = await create_access_token(user.id)
-                    return token
+                    return {"token": token }
             
         
         
@@ -80,6 +80,8 @@ async def update_user(  data:UpdateUser,user:User = Depends(get_current_user),co
         
         
         await connection.commit()
+        
+        user = await connection.scalar(select(User).where(User.email == data.email))
         
         
         return user        
