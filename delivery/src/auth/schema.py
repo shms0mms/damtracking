@@ -21,7 +21,7 @@ class UserCreate(BaseModel):
         
         password:str|bytes
         
-        company:Company  
+        role:Company  
 
 class UserAuth(BaseModel):
         
@@ -44,6 +44,8 @@ class UserMe(BaseModel):
         second_name:str
         
         third_name:str
+        
+        role:Company  
 
 class UpdateUser(BaseModel):
         

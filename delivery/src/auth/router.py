@@ -18,13 +18,15 @@ async def get_current_user(token:HTTPAuthorizationCredentials = Depends(bearer),
     user_id = await valid_access_token(token=token.credentials)
     user = await connection.scalar(select(User).where(User.id == user_id))
     
-    if user:
-    
-        return user
-    raise HTTPException(status_code=404, detail={
-        "token":"Not actual",
-        "status":404
-    })
+    if not user:
+        
+            raise HTTPException(status_code=404, detail={
+                "token":"Not actual",
+                "status":404
+            })
+            
+    return user
+
 
 
 app = APIRouter(prefix="/auth", tags=['auth'])
@@ -69,7 +71,7 @@ async def me(me:User = Depends(get_current_user)):
 
 
 
-@app.post("/update_me")
+@app.post("/update_me", response_model=UserMe)
 async def update_user(  data:UpdateUser,user:User = Depends(get_current_user),connection:AsyncSession  = Depends(get_session)):
 
         for field, value in data.model_dump().items():

@@ -28,4 +28,4 @@ class User(Base):
     
     password:Mapped[bytes]
     
-    company:Mapped[Company]  
+    role:Mapped[Company]  
