@@ -1,10 +1,10 @@
-import { UserCreate, UserLogin } from "@/types/auth.types"
+import { Token, UserCreate, UserLogin } from "@/types/auth.types"
 import { InstanseService } from "./instanse.service"
 import { AxiosResponse } from "axios"
 
 export class AuthService extends InstanseService {
 	async login(user: UserLogin) {
-		return await this.instanse.post<any, AxiosResponse<string>, UserLogin>(
+		return await this.instanse.post<any, AxiosResponse<Token>, UserLogin>(
 			"/auth/login",
 			undefined,
 			{
@@ -13,7 +13,7 @@ export class AuthService extends InstanseService {
 		)
 	}
 	async register(user: UserCreate) {
-		return await this.instanse.post<any, AxiosResponse<string>, UserCreate>(
+		return await this.instanse.post<any, AxiosResponse<Token>, UserCreate>(
 			"/auth/register",
 			undefined,
 			{

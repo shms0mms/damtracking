@@ -15,3 +15,7 @@ export interface UserCreate {
 	password: string
 	role: UserRole // Компания или покупатель
 }
+
+export interface Token {
+	token: string
+}

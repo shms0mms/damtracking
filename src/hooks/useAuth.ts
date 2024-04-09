@@ -17,7 +17,7 @@ const useAuth = () => {
 			mutationFn: () => authService.login(user),
 			mutationKey: [authKeys.login],
 		})
-		set(ACCESS_TOKEN_NAME, response.data?.data)
+		set(ACCESS_TOKEN_NAME, response.data?.data.token)
 
 		return response
 	}
@@ -27,7 +27,7 @@ const useAuth = () => {
 			mutationKey: [authKeys.register],
 		})
 
-		set(ACCESS_TOKEN_NAME, response.data?.data)
+		set(ACCESS_TOKEN_NAME, response.data?.data.token)
 
 		return response
 	}
