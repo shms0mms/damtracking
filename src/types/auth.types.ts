@@ -13,6 +13,7 @@ export interface UserCreate {
 	second_name: string
 	third_name: string
 	password: string
+	company_name: string
 	role: UserRole // Компания или покупатель
 }
 

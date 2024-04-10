@@ -6,10 +6,12 @@ import { useEffect } from "react"
 const useAuthRedirect = (isAuth: boolean, role?: UserRole) => {
 	const { push } = useRouter()
 	const pathname = usePathname()
-	!isAuth && pathname !== routes.login && push(routes.register)
-	isAuth && role === "company"
-		? push(routes.select)
-		: role === "customer" && push(routes.companies)
+	useEffect(() => {
+		!isAuth && pathname !== routes.login && push(routes.register)
+		isAuth && role === "company"
+			? push(routes.select)
+			: role === "customer" && push(routes.companies)
+	}, [isAuth, pathname, push, role])
 	return {}
 }
 

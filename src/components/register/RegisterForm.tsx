@@ -28,6 +28,7 @@ const RegisterForm: FC = () => {
 			"second_name",
 			"third_name",
 			"username",
+			"company_name",
 		],
 		mode: "onSubmit",
 	})
@@ -86,6 +87,14 @@ const RegisterForm: FC = () => {
 					register={register}
 					error={errors && errors.password}
 				/>
+				{/* Выбор роли */}
+				<InputField
+					name={"company_name"}
+					register={register}
+					placeholder="Название вашей компании"
+					isFocus={fields}
+				/>
+
 				<Error error={formError} />
 				<Button disabled={isLoading} type="submit">
 					{isLoading ? <Loader /> : "Зарегистрироваться"}

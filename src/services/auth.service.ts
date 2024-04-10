@@ -2,7 +2,7 @@ import { GET, POST } from "@/constants/constants"
 import { UserCreate, UserLogin } from "@/types/auth.types"
 export class AuthService {
 	private headers = {
-		"Content-Type": "application/json",
+		"Content-type": "application/json; charset=UTF-8",
 	}
 	private API_URL =
 		process.env.NEXT_PUBLIC_APP_API_URL ?? "http://localhost:8000"
@@ -25,13 +25,15 @@ export class AuthService {
 	}
 
 	async me(accessToken: string) {
-		const response = await fetch(`${this.API_URL}/auth/me`, {
-			method: GET,
-			headers: {
-				Authorization: `Bearer ${accessToken}`,
-			},
-		})
-		return response.json()
+		if (accessToken) {
+			const response = await fetch(`${this.API_URL}/auth/me`, {
+				method: GET,
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			})
+			return response.json()
+		}
 	}
 }
 
