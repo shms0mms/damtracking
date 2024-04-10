@@ -36,16 +36,26 @@ app = APIRouter(prefix="/auth", tags=['auth'])
 async def register(data:UserCreate, session:AsyncSession = Depends(get_session)):
         data.password = hash_password(data.password)
         user =User(**data.model_dump())
-
-        session.add(user)
-        await session.flush()
-
-        # access_token
-        token = await create_access_token(user.id)
         
-        await session.commit()        
+        try:
+
+            session.add(user)
+            await session.flush()
+
+            # access_token
+            token = await create_access_token(user.id)
             
-        return {"token": token }
+            await session.commit()        
+                
+            return {"token": token }
+        
+        except:
+            
+            raise HTTPException(status_code=404, detail={
+                "token":"Not actual",
+                "status":404
+            })
+            
 
 @app.post("/login")
 async def auth(data:UserAuth,session:AsyncSession = Depends(get_session)):

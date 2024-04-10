@@ -11,6 +11,8 @@ class UserCreate(BaseModel):
         
         username:str
         
+        company_name:Optional[str]
+        
         
         first_name:str
         
@@ -37,6 +39,8 @@ class UserMe(BaseModel):
         
         username:str
         
+        company_name:Optional[str]
+        
         email:EmailStr
         
         first_name:str
@@ -54,6 +58,7 @@ class UpdateUser(BaseModel):
         
         email:Optional[EmailStr]
         
+        company_name:Optional[str]
         
         
         first_name:Optional[str]
