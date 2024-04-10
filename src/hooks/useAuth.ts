@@ -1,57 +1,48 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 "use client"
 import { ACCESS_TOKEN_NAME } from "@/constants/constants"
-import { authKeys } from "@/constants/keys.constants"
 import authService from "@/services/auth.service"
 import { UserCreate, UserLogin } from "@/types/auth.types"
-import { useMutation, useQuery } from "@tanstack/react-query"
-import { useLocalStorage } from "react-pre-form"
+import { useLocalStorage } from "react-prp-form"
 import useContext from "./useContext"
 import { AppContext } from "@/context/AppRrovider"
 
 const useAuth = () => {
 	const { get, remove, set } = useLocalStorage()
 	const { updateAutheficated, updateUser } = useContext(AppContext)
-	const login = (user: UserLogin) => {
-		const response = useMutation({
-			mutationFn: () => authService.login(user),
-			mutationKey: [authKeys.login],
-		})
-		set(ACCESS_TOKEN_NAME, response.data?.data.token)
 
-		return response
+	const login = async (user: UserLogin) => {
+		const response = await authService.login(user)
+		if (response.detail)
+			return { http_code: 401, message: "Такого пользователя не существует" }
+		if (response) set(ACCESS_TOKEN_NAME, response.token)
+		return { http_code: 201, message: "Вы успешно вошли в аккаунт" }
 	}
-	const register = (user: UserCreate) => {
-		const response = useMutation({
-			mutationFn: () => authService.register(user),
-			mutationKey: [authKeys.register],
-		})
+	const register = async (user: UserCreate) => {
+		const response = await authService.register(user)
 
-		set(ACCESS_TOKEN_NAME, response.data?.data.token)
+		if (response) set(ACCESS_TOKEN_NAME, response.token)
 
-		return response
+		if (response.detail)
+			return { http_code: 401, message: "Такой пользователь уже существует" }
+
+		return { http_code: 201, message: "Пользователь успешно создан" }
 	}
-	const me = () => {
-		const response = useQuery({
-			queryKey: [authKeys.me],
-			queryFn: () => authService.me(),
-		})
-		updateUser(response.data?.data)
-	}
-	const auth = () => {
+	const me = async () => {
 		const accessToken = get(ACCESS_TOKEN_NAME)
-		const response = useMutation({
-			mutationFn: () => authService.auth(accessToken),
-		})
-		updateAutheficated(true)
+		const response = await authService.me(accessToken)
 
+		updateUser(response)
+		updateAutheficated(true)
 		return response
 	}
+
 	const logout = () => {
 		remove(ACCESS_TOKEN_NAME)
 		updateAutheficated(false)
+		updateUser(null)
 	}
-	return { auth, me, login, register, logout }
+	return { me, login, register, logout }
 }
 
 export default useAuth

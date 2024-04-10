@@ -1,9 +1,11 @@
 import type { Metadata } from "next"
-import { inter } from "@/styles/fonts"
 import "../styles/globals.scss"
+import { inter } from "@/styles/fonts"
+import QueryProvider from "@/context/QueryProvider"
+
 export const metadata: Metadata = {
 	title: "Damtracking",
-	description: "service for find a paths",
+	description: "Service for find a paths",
 }
 
 export default function RootLayout({
@@ -12,8 +14,10 @@ export default function RootLayout({
 	children: React.ReactNode
 }>) {
 	return (
-		<html lang="en">
-			<body className={inter.className}>{children}</body>
-		</html>
+		<QueryProvider>
+			<html lang="en">
+				<body className={inter.className}>{children}</body>
+			</html>
+		</QueryProvider>
 	)
 }

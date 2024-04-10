@@ -4,7 +4,7 @@ export interface User extends UserCreate {
 }
 export interface UserLogin {
 	password: string
-	username: string
+	email: string
 }
 export interface UserCreate {
 	email: string

@@ -1,5 +1,5 @@
 import { ITextareaField } from "@/types/ui.types"
-import { FieldsValues } from "react-pre-form"
+import { FieldsValues } from "react-prp-form"
 import FieldTitle from "./FieldTitle"
 
 const TextareaField = <FormData extends FieldsValues = object>(

@@ -1,10 +1,12 @@
+import type { Config } from "tailwindcss"
+
 export const colors = {
 	purple: "#985ACE",
 	"dark-purple": "#7c1fce",
 	light: "#F8F1FF",
 	main: "#403A4B",
+	green: "#013220",
 }
-import type { Config } from "tailwindcss"
 const config: Config = {
 	content: [
 		"./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -16,6 +18,5 @@ const config: Config = {
 			colors,
 		},
 	},
-	plugins: [],
 }
 export default config

@@ -1,7 +1,23 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+	webpack: config => {
+		config.module.rules.push({
+			test: /\.(png|jpg|gif)$/i,
+			use: [
+				{
+					loader: "url-loader",
+					options: {
+						limit: 8192,
+					},
+				},
+			],
+		})
+
+		return config
+	},
+
 	env: {
-		API_URL: process.env.API_URL,
+		NEXT_PUBLIC_APP_API_URL: process.env.NEXT_PUBLIC_APP_API_URL,
 	},
 }
 

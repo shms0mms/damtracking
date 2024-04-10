@@ -1,18 +1,24 @@
 "use client"
 import { UserCreate } from "@/types/auth.types"
 import { FC, useState } from "react"
-import { Form, OnSubmitHandler, useForm } from "react-pre-form"
+import { Form, OnSubmitHandler, useForm, useLocalStorage } from "react-prp-form"
 import InputField from "../ui/InputField"
-import PasswordVisibillity from "../ui/PasswordVisibillity"
-import Button from "../ui/Button"
 import Title from "../ui/Title"
+import Button from "../ui/Button"
+import useAuth from "@/hooks/useAuth"
+import Error from "../ui/Error"
+import PasswordField from "./PasswordField"
+import Loader from "../ui/Loader"
+import { Toaster, toast } from "sonner"
+import { colors } from "../../../tailwind.config"
+import EmailField from "./EmailField"
 
 const RegisterForm: FC = () => {
 	const {
 		handleSubmit,
 		register,
 		fields,
-		formState: { errors },
+		formState: { errors, isLoading },
 	} = useForm<UserCreate>({
 		withLocalStorage: [
 			"email",
@@ -25,14 +31,26 @@ const RegisterForm: FC = () => {
 		],
 		mode: "onSubmit",
 	})
-	const [isHidden, updateIsHidden] = useState(true)
-	const onSubmit: OnSubmitHandler<UserCreate> = data => {
-		console.log(data)
+	const [formError, setFormError] = useState<string>()
+	const { register: registry, me } = useAuth()
+	const onSubmit: OnSubmitHandler<UserCreate> = async data => {
+		const rsp = await registry({
+			...data,
+			role: "customer",
+		})
+
+		if (rsp.http_code === 401) {
+			setFormError(rsp.message)
+		} else {
+			setFormError(undefined)
+			toast("Вы успешно зарегистрировались")
+		}
+		await me()
 	}
 
 	return (
-		<Form handleSubmit={handleSubmit} onSubmitHandler={onSubmit}>
-			<div className="flex flex-col gap-2">
+		<Form method="POST" handleSubmit={handleSubmit} onSubmitHandler={onSubmit}>
+			<div className="flex flex-col gap-4 min-w-[479px]">
 				<Title className="text-center">Регистрация</Title>
 				<InputField
 					name={"first_name"}
@@ -58,35 +76,20 @@ const RegisterForm: FC = () => {
 					placeholder="Ваш логин"
 					isFocus={fields}
 				/>
-				<InputField
-					name={"email"}
+				<EmailField
+					fields={fields}
 					register={register}
-					placeholder="Ваша почта"
-					isFocus={fields}
+					error={errors && errors.email}
 				/>
-				<div className="relative">
-					<InputField
-						name={"password"}
-						register={register}
-						placeholder="Пароль (не менее 8 символов)"
-						type={isHidden ? "password" : "text"}
-						isFocus={fields}
-						params={{
-							minLength: {
-								value: 8,
-								message: "Пароль должен быть не менее 8 символов",
-							},
-						}}
-						error={errors && errors.password}
-					/>
-					<div className="absolute top-1/2 -translate-y-1/2 right-4">
-						<PasswordVisibillity
-							isHidden={isHidden}
-							updateIsHidden={updateIsHidden}
-						/>
-					</div>
-				</div>
-				<Button>Зарегистрироваться</Button>
+				<PasswordField
+					fields={fields}
+					register={register}
+					error={errors && errors.password}
+				/>
+				<Error error={formError} />
+				<Button disabled={isLoading} type="submit">
+					{isLoading ? <Loader /> : "Зарегистрироваться"}
+				</Button>
 			</div>
 		</Form>
 	)

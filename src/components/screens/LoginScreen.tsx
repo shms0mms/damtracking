@@ -1,13 +1,12 @@
-"use client"
 import BaseLayout from "../BaseLayout"
-import RegisterForm from "../register/RegisterForm"
+import LoginForm from "../login/LoginForm"
 
-export default function RegisterScreen() {
+export default function LoginScreen() {
 	return (
 		<>
 			<BaseLayout>
 				<div className="flex items-center justify-center w-full h-full">
-					<RegisterForm />
+					<LoginForm />
 				</div>
 			</BaseLayout>
 		</>

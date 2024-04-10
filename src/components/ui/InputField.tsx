@@ -1,6 +1,7 @@
 import { IInputField } from "@/types/ui.types"
-import { FieldsValues } from "react-pre-form"
+import { FieldsValues } from "react-prp-form"
 import FieldTitle from "./FieldTitle"
+import Error from "./Error"
 
 const InputField = <FormData extends FieldsValues = object>(
 	props: IInputField<FormData>
@@ -27,9 +28,7 @@ const InputField = <FormData extends FieldsValues = object>(
 					type={type || "text"}
 					{..._props}
 				/>
-				{!!error && (
-					<div className="text-red-500 font-semibold text-xs">{error}</div>
-				)}
+				<Error error={error} />
 			</div>
 		</>
 	)

@@ -16,6 +16,7 @@ export const AppContext = createContext<TAppContext | {}>({})
 const AppProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
 	const [user, updateUser] = useState<User | null>(null)
 	const [isAuth, updateAutheficated] = useState(false)
+
 	const [isDecreased, setIsDecreased] = useState(false)
 	const value: TAppContext = {
 		isAuth,
