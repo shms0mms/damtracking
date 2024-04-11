@@ -25,15 +25,13 @@ export class AuthService {
 	}
 
 	async me(accessToken: string) {
-		if (accessToken) {
-			const response = await fetch(`${this.API_URL}/auth/me`, {
-				method: GET,
-				headers: {
-					Authorization: `Bearer ${accessToken}`,
-				},
-			})
-			return response.json()
-		}
+		const response = await fetch(`${this.API_URL}/auth/me`, {
+			method: GET,
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+			},
+		})
+		return response.json()
 	}
 }
 

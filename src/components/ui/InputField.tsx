@@ -1,5 +1,5 @@
 import { IInputField } from "@/types/ui.types"
-import { FieldsValues } from "react-prp-form"
+import { FieldsValues } from "react-pcp-form"
 import FieldTitle from "./FieldTitle"
 import Error from "./Error"
 

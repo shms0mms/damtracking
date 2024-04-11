@@ -2,7 +2,7 @@ import { FC } from "react"
 import { IMenuListItem } from "./MenuList"
 import Link from "next/link"
 import useContext from "@/hooks/useContext"
-import { AppContext } from "@/context/AppRrovider"
+import { AppContext } from "@/context/AppProvider"
 import isExistsInURL from "@/utils/isExistsInURL.utils"
 const MenuListItem: FC<IMenuListItem> = ({ icon, id, text, href }) => {
 	const { isDecreased } = useContext(AppContext)

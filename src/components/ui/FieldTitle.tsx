@@ -1,6 +1,6 @@
 "use client"
 import { useEffect, useRef } from "react"
-import { Fields, FieldsValues } from "react-prp-form"
+import { Fields, FieldsValues } from "react-pcp-form"
 
 export interface IFieldTitle<FormData extends FieldsValues = object> {
 	isFocus?: Fields<FormData>

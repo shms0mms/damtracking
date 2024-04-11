@@ -17,6 +17,8 @@ export interface UserCreate {
 	role: UserRole // Компания или покупатель
 }
 
+export interface Company extends Omit<User, "password" | "role"> {}
+
 export interface Token {
 	token: string
 }

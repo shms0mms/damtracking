@@ -1,5 +1,5 @@
 import { InputHTMLAttributes, TextareaHTMLAttributes } from "react"
-import { Fields, FieldsValues, Register, RegisterParams } from "react-prp-form"
+import { Fields, FieldsValues, Register, RegisterParams } from "react-pcp-form"
 
 export type IField<FormData extends FieldsValues = object> = {
 	register: Register<FormData>

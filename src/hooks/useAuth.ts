@@ -3,14 +3,16 @@
 import { ACCESS_TOKEN_NAME } from "@/constants/constants"
 import authService from "@/services/auth.service"
 import { UserCreate, UserLogin } from "@/types/auth.types"
-import { useLocalStorage } from "react-prp-form"
+import { useLocalStorage } from "react-pcp-form"
 import useContext from "./useContext"
-import { AppContext } from "@/context/AppRrovider"
+import { AppContext } from "@/context/AppProvider"
+import { useRouter } from "next/navigation"
+import { routes } from "@/constants/routes.constants"
 
 const useAuth = () => {
 	const { get, remove, set } = useLocalStorage()
-	const { updateAutheficated, updateUser } = useContext(AppContext)
-
+	const { updateAutheficated, updateUser, user } = useContext(AppContext)
+	const { push } = useRouter()
 	const login = async (user: UserLogin) => {
 		const response = await authService.login(user)
 		if (response.detail)
@@ -30,17 +32,23 @@ const useAuth = () => {
 	}
 	const me = async () => {
 		const accessToken = get(ACCESS_TOKEN_NAME)
-		const response = await authService.me(accessToken)
 
-		updateUser(response)
-		updateAutheficated(true)
-		return response
+		if (accessToken) {
+			const response = await authService.me(accessToken)
+
+			updateUser(response)
+
+			updateAutheficated(true)
+			return response
+		}
 	}
 
 	const logout = () => {
 		remove(ACCESS_TOKEN_NAME)
 		updateAutheficated(false)
+
 		updateUser(null)
+		push(routes.login)
 	}
 	return { me, login, register, logout }
 }

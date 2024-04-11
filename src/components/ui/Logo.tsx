@@ -1,7 +1,7 @@
 import { FC } from "react"
 import Title from "./Title"
 import useContext from "@/hooks/useContext"
-import { AppContext } from "@/context/AppRrovider"
+import { AppContext } from "@/context/AppProvider"
 import { AudioWaveform } from "lucide-react"
 
 const Logo: FC = ({}) => {

@@ -1,12 +1,16 @@
 import useContext from "./useContext"
-import { AppContext } from "@/context/AppRrovider"
+import { AppContext } from "@/context/AppProvider"
 import useAuth from "./useAuth"
 
 const useCurrentUser = () => {
 	const { updateUser, user } = useContext(AppContext)
 	const { me } = useAuth()
 	const setCurrentUser = async () => {
-		updateUser(await me())
+		const user = await me()
+
+		updateUser(user || null)
+
+		return user?.id ? true : false
 	}
 	const getCurrentUser = async () => {
 		return user

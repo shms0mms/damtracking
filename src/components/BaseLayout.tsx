@@ -1,5 +1,5 @@
 "use client"
-import AppProvider from "@/context/AppRrovider"
+import AppProvider from "@/context/AppProvider"
 import { FC, PropsWithChildren } from "react"
 import SideBar from "./sidebar/SideBar"
 import RedirectUser from "./redirect/RedirectUser"

@@ -1,5 +1,5 @@
 import { FC, useState } from "react"
-import { Fields, FieldsValues, Register } from "react-prp-form"
+import { Fields, FieldsValues, Register } from "react-pcp-form"
 import InputField from "../ui/InputField"
 import PasswordVisibillity from "../ui/PasswordVisibillity"
 import { EMAIL_REGEXP } from "@/constants/constants"

@@ -17,9 +17,9 @@
 		"next": "14.1.0",
 		"react": "^18",
 		"react-dom": "^18",
-		"react-prp-form": "^1.0.0",
-		"sass": "^1.74.1",
-		"sonner": "^1.4.41"
+		"react-pcp-form": "1.0.0",
+		"sonner": "^1.4.41",
+		"zm-swiped": "^1.0.0"
 	},
 	"devDependencies": {
 		"@types/axios": "^0.14.0",
