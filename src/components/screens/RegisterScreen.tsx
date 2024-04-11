@@ -8,9 +8,7 @@ export default function RegisterScreen() {
 		<>
 			<BaseLayout>
 				<Container>
-					<div className="flex items-center justify-center w-full h-full">
-						<RegisterForm />
-					</div>
+					<RegisterForm />
 				</Container>
 			</BaseLayout>
 		</>

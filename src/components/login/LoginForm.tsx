@@ -51,8 +51,16 @@ const LoginForm: FC = () => {
 	}
 
 	return (
-		<Form method="POST" handleSubmit={handleSubmit} onSubmitHandler={onSubmit}>
-			<div className={`flex flex-col gap-4 ${!isMobile && "min-w-[479px]"} `}>
+		<form
+			className="min-w-full flex items-center justify-center min-h-full py-10"
+			method="POST"
+			onSubmit={e => handleSubmit(e, onSubmit)}
+		>
+			<div
+				className={`flex flex-col gap-4 ${
+					!isMobile ? "min-w-[479px]" : "min-w-full"
+				} `}
+			>
 				<Title className="text-center">Вход</Title>
 
 				<EmailField
@@ -70,12 +78,12 @@ const LoginForm: FC = () => {
 					{isLoading ? <Loader /> : "Войти"}
 				</Button>
 				<Link href={routes.register}>
-					Еще нету аккаунта?{" "}
+					Еще нету аккаунта?
 					<span className="text-dark-purple">Зарегистрироваться</span>
 				</Link>
 			</div>
 			<AuthToaster />
-		</Form>
+		</form>
 	)
 }
 

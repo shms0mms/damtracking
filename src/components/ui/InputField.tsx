@@ -19,7 +19,7 @@ const InputField = <FormData extends FieldsValues = object>(
 	} = props
 	return (
 		<>
-			<div className="relative flex flex-col gap-1">
+			<div className="relative w-full flex flex-col gap-1">
 				<FieldTitle name={name} isFocus={isFocus} placeholder={placeholder} />
 				<input
 					{...register(name, params)}
@@ -28,7 +28,7 @@ const InputField = <FormData extends FieldsValues = object>(
 					type={type || "text"}
 					{..._props}
 				/>
-				<Error error={error} />
+				<Error className="absolute top-[105%] left-0" error={error} />
 			</div>
 		</>
 	)

@@ -71,8 +71,16 @@ const RegisterForm: FC = () => {
 	}
 	const { matches: isMobile } = useMediaQuery(media.mobile)
 	return (
-		<Form method="POST" handleSubmit={handleSubmit} onSubmitHandler={onSubmit}>
-			<div className={`flex flex-col gap-4 ${!isMobile && "min-w-[479px]"}`}>
+		<form
+			method="POST"
+			className="min-w-full flex items-center justify-center min-h-full py-10"
+			onSubmit={e => handleSubmit(e, onSubmit)}
+		>
+			<div
+				className={`flex flex-col gap-4 ${
+					!isMobile ? "min-w-[479px]" : "min-w-full"
+				}`}
+			>
 				<Title className="text-center">Регистрация</Title>
 				<InputField
 					name={"first_name"}
@@ -132,7 +140,7 @@ const RegisterForm: FC = () => {
 				</Link>
 			</div>
 			<AuthToaster />
-		</Form>
+		</form>
 	)
 }
 

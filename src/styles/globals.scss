@@ -12,7 +12,7 @@ body {
 }
 
 .field {
-	@apply font-normal text-sm py-[14px] px-4 rounded-md bg-light;
+	@apply font-normal text-sm py-[14px] px-4 rounded-md w-full bg-light;
 }
 .auth-toast {
 	@apply text-dark-purple bg-white font-bold text-lg py-3;

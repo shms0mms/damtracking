@@ -6,6 +6,7 @@ export const colors = {
 	light: "#F8F1FF",
 	main: "#403A4B",
 	green: "#013220",
+	red: "#FF0000",
 }
 const config: Config = {
 	content: [

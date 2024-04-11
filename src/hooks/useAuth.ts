@@ -2,7 +2,7 @@
 "use client"
 import { ACCESS_TOKEN_NAME } from "@/constants/constants"
 import authService from "@/services/auth.service"
-import { UserCreate, UserLogin } from "@/types/auth.types"
+import { UserCreate, UserLogin, UserUpdate } from "@/types/auth.types"
 import { useLocalStorage } from "react-pcp-form"
 import useContext from "./useContext"
 import { AppContext } from "@/context/AppProvider"
@@ -43,6 +43,21 @@ const useAuth = () => {
 		}
 	}
 
+	const update = async (user: UserUpdate) => {
+		const accessToken = get(ACCESS_TOKEN_NAME)
+
+		if (accessToken) {
+			const response = await authService.update(user, accessToken)
+
+			updateUser(response)
+
+			if (response.detail)
+				return { http_code: 500, message: "Неизввестная ошибка" }
+
+			return { http_code: 200, message: "Пользователь успешно изменен" }
+		}
+	}
+
 	const logout = () => {
 		remove(ACCESS_TOKEN_NAME)
 		updateAutheficated(false)
@@ -50,7 +65,7 @@ const useAuth = () => {
 		updateUser(null)
 		push(routes.login)
 	}
-	return { me, login, register, logout }
+	return { me, login, register, logout, update }
 }
 
 export default useAuth

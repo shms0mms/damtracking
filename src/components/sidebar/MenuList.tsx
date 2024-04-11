@@ -5,6 +5,7 @@ import {
 	Factory,
 	Home,
 	LogIn,
+	Settings,
 	ShoppingCart,
 	Waypoints,
 } from "lucide-react"
@@ -33,6 +34,12 @@ const MenuList: FC = ({}) => {
 		icon: <Factory width={size} height={size} />,
 		text: "Все компании",
 		href: routes.companies,
+	}
+	const settings = {
+		id: 6,
+		icon: <Settings width={size} height={size} />,
+		text: "Настройки",
+		href: routes.settings,
 	}
 	const cart = {
 		id: 5,
@@ -73,7 +80,8 @@ const MenuList: FC = ({}) => {
 			) {
 				setItems(state => [...state, allCompanies, cart])
 			}
-
+			if (items.every(value => value.id !== settings.id))
+				setItems(state => [...state, settings])
 			updateIsLoading(false)
 		} else {
 			setItems(state => [...state.slice(0, 2)])

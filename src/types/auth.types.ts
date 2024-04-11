@@ -16,9 +16,14 @@ export interface UserCreate {
 	company_name: string
 	role: UserRole // Компания или покупатель
 }
-
+export interface UserUpdate extends Omit<UserCreate, "password" | "role"> {}
 export interface Company extends Omit<User, "password" | "role"> {}
-
+export interface Product {
+	id: number
+	title: string
+	price: number
+	desc: string
+}
 export interface Token {
 	token: string
 }

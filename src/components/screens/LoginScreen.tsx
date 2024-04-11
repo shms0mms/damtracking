@@ -7,9 +7,7 @@ export default function LoginScreen() {
 		<>
 			<BaseLayout>
 				<Container>
-					<div className="flex items-center justify-center w-full h-full">
-						<LoginForm />
-					</div>
+					<LoginForm />
 				</Container>
 			</BaseLayout>
 		</>

@@ -1,11 +1,7 @@
-import { GET, POST } from "@/constants/constants"
-import { UserCreate, UserLogin } from "@/types/auth.types"
-export class AuthService {
-	private headers = {
-		"Content-type": "application/json; charset=UTF-8",
-	}
-	private API_URL =
-		process.env.NEXT_PUBLIC_APP_API_URL ?? "http://localhost:8000"
+import { GET, POST, PUT } from "@/constants/constants"
+import { UserCreate, UserLogin, UserUpdate } from "@/types/auth.types"
+import { InstanceService } from "./instance.service"
+export class AuthService extends InstanceService {
 	async login(user: UserLogin) {
 		const response = await fetch(`${this.API_URL}/auth/login`, {
 			method: POST,
@@ -27,10 +23,18 @@ export class AuthService {
 	async me(accessToken: string) {
 		const response = await fetch(`${this.API_URL}/auth/me`, {
 			method: GET,
-			headers: {
-				Authorization: `Bearer ${accessToken}`,
-			},
+			headers: this.authHeaders(accessToken),
 		})
+		return response.json()
+	}
+
+	async update(user: UserUpdate, accessToken: string) {
+		const response = await fetch(`${this.API_URL}/auth/update_me`, {
+			method: PUT,
+			body: JSON.stringify({ ...user }),
+			headers: this.authHeaders(accessToken),
+		})
+
 		return response.json()
 	}
 }

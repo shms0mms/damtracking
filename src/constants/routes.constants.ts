@@ -7,4 +7,7 @@ export const routes = {
 	login: "/auth/login",
 	"add-address": "/companies/add-address",
 	cart: "/cart",
+	settings: "/auth/settings",
+	vk: "https://vk.com/pizdscc",
+	order: "/cart/order",
 }
