@@ -41,9 +41,9 @@ const Header: FC = ({}) => {
 							href={routes.settings}
 							className="flex items-center gap-2 text-dark-purple"
 						>
-							<Square className="bg-purple text-white p-1.5 rounded-[50%]">
+							<div className="bg-purple rounded-[50%] text-white p-1.5">
 								<User2Icon width={14} height={14} />
-							</Square>
+							</div>
 							{user?.username}
 						</NextLink>
 					) : (

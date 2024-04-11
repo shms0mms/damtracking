@@ -7,6 +7,7 @@ import {
 	LogIn,
 	Settings,
 	ShoppingCart,
+	SquareEqualIcon,
 	Waypoints,
 } from "lucide-react"
 import { FC, ReactNode, useEffect, useState } from "react"
@@ -27,7 +28,13 @@ const MenuList: FC = ({}) => {
 		id: 4,
 		icon: <Waypoints width={size} height={size} />,
 		text: "Добавить маршрут",
-		href: routes["add-address"],
+		href: routes["create-address"],
+	}
+	const createProduct = {
+		id: 5,
+		icon: <SquareEqualIcon width={size} height={size} />,
+		text: "Создать товар",
+		href: routes["create-product"],
 	}
 	const allCompanies = {
 		id: 3,
@@ -36,13 +43,13 @@ const MenuList: FC = ({}) => {
 		href: routes.companies,
 	}
 	const settings = {
-		id: 6,
+		id: 7,
 		icon: <Settings width={size} height={size} />,
 		text: "Настройки",
 		href: routes.settings,
 	}
 	const cart = {
-		id: 5,
+		id: 6,
 		icon: <ShoppingCart width={size} height={size} />,
 		text: "Корзина",
 		href: routes.cart,
@@ -69,9 +76,11 @@ const MenuList: FC = ({}) => {
 			updateIsLoading(true)
 			if (
 				user?.role === "company" &&
-				items.every(value => value.id !== addPath.id)
+				items.every(
+					value => value.id !== addPath.id && value.id !== createProduct.id
+				)
 			)
-				setItems(state => [...state, addPath])
+				setItems(state => [...state, addPath, createProduct])
 			else if (
 				user?.role === "customer" &&
 				items.every(

@@ -7,6 +7,7 @@ export const colors = {
 	main: "#403A4B",
 	green: "#013220",
 	red: "#FF0000",
+	"transparent-black": "rgb(0, 0, 0, 0.7)",
 }
 const config: Config = {
 	content: [

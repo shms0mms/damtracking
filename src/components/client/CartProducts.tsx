@@ -1,4 +1,3 @@
-import products from "@/assets/products.assets"
 import { FC } from "react"
 import ProductCard from "./ProductCard"
 import { Product } from "@/types/auth.types"

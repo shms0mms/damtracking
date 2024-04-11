@@ -1,13 +1,15 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client"
 import { useEffect, useState } from "react"
-import BaseLayout from "../BaseLayout"
-import CartControl from "../cart/CartControl"
-import CartProducts from "../cart/CartProducts"
+import CartControl from "../client/CartControl"
+import CartProducts from "../client/CartProducts"
 import Container from "../ui/Container"
 import { Product } from "@/types/auth.types"
 import useCart from "@/hooks/useCart"
 import productsAssets from "@/assets/products.assets"
 import sum from "@/utils/sum.utils"
+import useContext from "@/hooks/useContext"
+import { CartContext } from "@/context/CartContext"
 
 export default function CartScreen() {
 	const [products, setProducts] = useState<Product[]>(productsAssets)
@@ -17,24 +19,25 @@ export default function CartScreen() {
 
 		setProducts(prdcts || [])
 	}
+	const { quantityProducts, updateQuantityProducts } = useContext(CartContext)
 	useEffect(() => {
 		updateProducts()
+		updateQuantityProducts(products.length)
 	}, [])
+
 	return (
-		<BaseLayout>
-			<Container>
-				<div className="h-full flex gap-4 justify-between">
-					<div className="h-full flex-[0_1_70%]">
-						<CartProducts products={products} />
-					</div>
-					<div className="h-full flex-[0_1_30%]">
-						<CartControl
-							quantity={products.length}
-							sum={sum(products.map(p => p.price))}
-						/>
-					</div>
+		<Container>
+			<div className="h-full flex gap-4 justify-between">
+				<div className="h-full flex-[0_1_70%]">
+					<CartProducts products={products} />
 				</div>
-			</Container>
-		</BaseLayout>
+				<div className="h-full flex-[0_1_30%]">
+					<CartControl
+						quantity={quantityProducts}
+						sum={sum(products.map(p => p.price))}
+					/>
+				</div>
+			</div>
+		</Container>
 	)
 }

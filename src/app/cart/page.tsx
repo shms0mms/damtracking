@@ -1,5 +1,10 @@
+import BaseLayout from "@/components/BaseLayout"
 import CartScreen from "@/components/screens/CartScreen"
 
 export default function CartPage() {
-	return <CartScreen />
+	return (
+		<BaseLayout>
+			<CartScreen />
+		</BaseLayout>
+	)
 }
