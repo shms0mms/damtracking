@@ -9,7 +9,7 @@ const Error: FC<IError> = ({ error, className }) => {
 	return (
 		<>
 			{!!error && (
-				<div className={`text-red-500 font-semibold text-xs ${className}`}>
+				<div className={`text-red font-semibold text-xs ${className}`}>
 					{error}
 				</div>
 			)}

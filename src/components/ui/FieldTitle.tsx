@@ -23,7 +23,7 @@ const FieldTitle = <FormData extends FieldsValues = object>({
 	useEffect(() => {
 		if (ref.current) {
 			const style = ref.current.style
-			style.top = focused ? "2px" : "50%"
+			style.top = focused ? "2px" : "20px"
 			style.transform = focused ? "translateY(0)" : "translateY(-50%)"
 			style.left = focused ? "6px" : "16px"
 			style.fontSize = focused ? "10px" : "14px"

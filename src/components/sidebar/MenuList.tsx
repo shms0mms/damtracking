@@ -8,6 +8,7 @@ import {
 	Settings,
 	ShoppingCart,
 	SquareEqualIcon,
+	SquareKanban,
 	Waypoints,
 } from "lucide-react"
 import { FC, ReactNode, useEffect, useState } from "react"
@@ -35,6 +36,12 @@ const MenuList: FC = ({}) => {
 		icon: <SquareEqualIcon width={size} height={size} />,
 		text: "Создать товар",
 		href: routes["create-product"],
+	}
+	const myProducts = {
+		id: 8,
+		icon: <SquareKanban width={size} height={size} />,
+		text: "Мои товары",
+		href: routes["my-products"],
 	}
 	const allCompanies = {
 		id: 3,
@@ -77,10 +84,13 @@ const MenuList: FC = ({}) => {
 			if (
 				user?.role === "company" &&
 				items.every(
-					value => value.id !== addPath.id && value.id !== createProduct.id
+					value =>
+						value.id !== addPath.id &&
+						value.id !== createProduct.id &&
+						value.id !== myProducts.id
 				)
 			)
-				setItems(state => [...state, addPath, createProduct])
+				setItems(state => [...state, addPath, createProduct, myProducts])
 			else if (
 				user?.role === "customer" &&
 				items.every(

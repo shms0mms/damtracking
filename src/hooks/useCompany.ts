@@ -68,6 +68,14 @@ const useCompany = () => {
 			return response
 		}
 	}
+	const getMyProducts = async () => {
+		const accessToken = get(ACCESS_TOKEN_NAME)
+		if (accessToken) {
+			const response = await companiesService.getMyProducts(accessToken)
+
+			return response
+		}
+	}
 	return {
 		getAllCompanies,
 		createProduct,
@@ -75,6 +83,7 @@ const useCompany = () => {
 		updateProduct,
 		getProductById,
 		getProductsFromCompanyId,
+		getMyProducts,
 	}
 }
 

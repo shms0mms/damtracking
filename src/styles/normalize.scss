@@ -27,7 +27,11 @@ header,
 aside {
 	display: block;
 }
-
+textarea {
+	resize: vertical;
+	max-height: 230px;
+	min-height: 45px;
+}
 body {
 	user-select: none;
 }

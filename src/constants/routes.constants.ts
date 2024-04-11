@@ -15,4 +15,5 @@ export const routes = {
 	order: "/cart/order",
 	product: (productId: number) => `/companies/products/${productId}`,
 	"create-product": "/companies/products/create",
+	"my-products": "/companies/products/my",
 }

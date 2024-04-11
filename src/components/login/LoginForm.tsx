@@ -18,6 +18,7 @@ import useContext from "@/hooks/useContext"
 import { AppContext } from "@/context/AppProvider"
 import Link from "../ui/Link"
 import { media } from "@/constants/media.constants"
+import AdaptivForm from "../ui/AdaptivForm"
 
 const LoginForm: FC = () => {
 	const {
@@ -51,39 +52,29 @@ const LoginForm: FC = () => {
 	}
 
 	return (
-		<form
-			className="min-w-full flex items-center justify-center min-h-full py-10"
-			method="POST"
-			onSubmit={e => handleSubmit(e, onSubmit)}
-		>
-			<div
-				className={`flex flex-col gap-4 ${
-					!isMobile ? "min-w-[479px]" : "min-w-full"
-				} `}
-			>
-				<Title className="text-center">Вход</Title>
+		<AdaptivForm handleSubmit={handleSubmit} onSubmitHandler={onSubmit}>
+			<Title className="text-center">Вход</Title>
 
-				<EmailField
-					fields={fields}
-					register={register}
-					error={errors && errors.email}
-				/>
-				<PasswordField
-					fields={fields}
-					register={register}
-					error={errors && errors.password}
-				/>
-				<Error error={formError} />
-				<Button disabled={isLoading} type="submit">
-					{isLoading ? <Loader /> : "Войти"}
-				</Button>
-				<Link href={routes.register}>
-					Еще нету аккаунта?
-					<span className="text-dark-purple">Зарегистрироваться</span>
-				</Link>
-			</div>
+			<EmailField
+				fields={fields}
+				register={register}
+				error={errors && errors.email}
+			/>
+			<PasswordField
+				fields={fields}
+				register={register}
+				error={errors && errors.password}
+			/>
+			<Error error={formError} />
+			<Button disabled={isLoading} type="submit">
+				{isLoading ? <Loader /> : "Войти"}
+			</Button>
+			<Link href={routes.register}>
+				Еще нету аккаунта?
+				<span className="text-dark-purple">Зарегистрироваться</span>
+			</Link>
 			<AuthToaster />
-		</form>
+		</AdaptivForm>
 	)
 }
 

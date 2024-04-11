@@ -35,6 +35,13 @@ export class CompaniesService extends InstanceService {
 
 		return response.json()
 	}
+	async getMyProducts(accessToken: string) {
+		const response = await fetch(`${this.API_URL}/company/show_products`, {
+			method: GET,
+			headers: this.authHeaders(accessToken),
+		})
+		return response.json()
+	}
 
 	// Работа с продуктами
 	async createProduct(product: Omit<Product, "id">, accessToken: string) {

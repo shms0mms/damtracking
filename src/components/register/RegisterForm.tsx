@@ -17,6 +17,7 @@ import Link from "../ui/Link"
 import InputSelect from "../ui/InputSelect"
 import AuthToaster from "../ui/AuthToaster"
 import { media } from "@/constants/media.constants"
+import AdaptivForm from "../ui/AdaptivForm"
 
 const RegisterForm: FC = () => {
 	const {
@@ -69,78 +70,67 @@ const RegisterForm: FC = () => {
 			}, 2000)
 		}
 	}
-	const { matches: isMobile } = useMediaQuery(media.mobile)
 	return (
-		<form
-			method="POST"
-			className="min-w-full flex items-center justify-center min-h-full py-10"
-			onSubmit={e => handleSubmit(e, onSubmit)}
-		>
-			<div
-				className={`flex flex-col gap-4 ${
-					!isMobile ? "min-w-[479px]" : "min-w-full"
-				}`}
-			>
-				<Title className="text-center">Регистрация</Title>
-				<InputField
-					name={"first_name"}
-					register={register}
-					isFocus={fields}
-					placeholder="Ваше имя"
-				/>
-				<InputField
-					name={"second_name"}
-					register={register}
-					placeholder="Ваша фамилия"
-					isFocus={fields}
-				/>
-				<InputField
-					name={"third_name"}
-					register={register}
-					placeholder="Ваше отчество"
-					isFocus={fields}
-				/>
-				<InputField
-					name={"username"}
-					register={register}
-					placeholder="Ваш логин"
-					isFocus={fields}
-				/>
-				<EmailField
-					fields={fields}
-					register={register}
-					error={errors && errors.email}
-				/>
-				<PasswordField
-					fields={fields}
-					register={register}
-					error={errors && errors.password}
-				/>
+		<AdaptivForm handleSubmit={handleSubmit} onSubmitHandler={onSubmit}>
+			<Title className="text-center">Регистрация</Title>
+			<InputField
+				name={"first_name"}
+				register={register}
+				isFocus={fields}
+				placeholder="Ваше имя"
+			/>
+			<InputField
+				name={"second_name"}
+				register={register}
+				placeholder="Ваша фамилия"
+				isFocus={fields}
+			/>
+			<InputField
+				name={"third_name"}
+				register={register}
+				placeholder="Ваше отчество"
+				isFocus={fields}
+			/>
+			<InputField
+				name={"username"}
+				register={register}
+				placeholder="Ваш логин"
+				isFocus={fields}
+			/>
+			<EmailField
+				fields={fields}
+				register={register}
+				error={errors && errors.email}
+			/>
+			<PasswordField
+				fields={fields}
+				register={register}
+				error={errors && errors.password}
+			/>
 
-				<InputSelect<UserCreate>
-					name={"role"}
-					values={["Компания", "Покупатель"]}
-					changeValue={changeRoleValue}
-					value={roleValue}
+			<InputSelect<UserCreate>
+				name={"role"}
+				values={["Компания", "Покупатель"]}
+				changeValue={changeRoleValue}
+				value={roleValue}
+			/>
+			{(roleValue === "Компания" || roleValue === "") && (
+				<InputField
+					name={"company_name"}
+					register={register}
+					placeholder="Название вашей компании"
+					isFocus={fields}
 				/>
-				{(roleValue === "Компания" || roleValue === "") && (
-					<InputField
-						name={"company_name"}
-						register={register}
-						placeholder="Название вашей компании"
-						isFocus={fields}
-					/>
-				)}
-				<Error error={formError} />
-				<Button disabled={isLoading} type="submit">
-					{isLoading ? <Loader /> : "Зарегистрироваться"}
-				</Button>
-				<Link href={routes.login}>
-					Уже есть аккаунт? <span className="text-dark-purple">Войти</span>
-				</Link>
-			</div>
+			)}
+			<Error error={formError} />
+			<Button disabled={isLoading} type="submit">
+				{isLoading ? <Loader /> : "Зарегистрироваться"}
+			</Button>
+			<Link href={routes.login}>
+				Уже есть аккаунт? <span className="text-dark-purple">Войти</span>
+			</Link>
 			<AuthToaster />
-		</form>
+		</AdaptivForm>
 	)
 }
 
