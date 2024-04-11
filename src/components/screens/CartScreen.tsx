@@ -6,13 +6,12 @@ import CartProducts from "../client/CartProducts"
 import Container from "../ui/Container"
 import { Product } from "@/types/auth.types"
 import useCart from "@/hooks/useCart"
-import productsAssets from "@/assets/products.assets"
 import sum from "@/utils/sum.utils"
 import useContext from "@/hooks/useContext"
 import { CartContext } from "@/context/CartContext"
 
 export default function CartScreen() {
-	const [products, setProducts] = useState<Product[]>(productsAssets)
+	const [products, setProducts] = useState<Product[]>([])
 	const { getAllProducts } = useCart()
 	const updateProducts = async () => {
 		const prdcts = await getAllProducts()
@@ -23,20 +22,22 @@ export default function CartScreen() {
 	useEffect(() => {
 		updateProducts()
 		updateQuantityProducts(products.length)
-	}, [])
-
+	}, [products])
+	const productsExists = !!products && !!products.length
 	return (
 		<Container>
 			<div className="h-full flex gap-4 justify-between">
-				<div className="h-full flex-[0_1_70%]">
+				<div className={`h-full  w-full ${productsExists && "flex-[0_1_70%]"}`}>
 					<CartProducts products={products} />
 				</div>
-				<div className="h-full flex-[0_1_30%]">
-					<CartControl
-						quantity={quantityProducts}
-						sum={sum(products.map(p => p.price))}
-					/>
-				</div>
+				{productsExists && (
+					<div className="h-full flex-[0_1_30%]">
+						<CartControl
+							quantity={quantityProducts}
+							sum={sum(products.map(p => p.price))}
+						/>
+					</div>
+				)}
 			</div>
 		</Container>
 	)

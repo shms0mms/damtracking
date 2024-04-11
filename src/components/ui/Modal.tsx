@@ -17,7 +17,7 @@ const Modal: FC<PropsWithChildren<IModal>> = ({
 }) => {
 	return (
 		<div
-			className={`fixed top-0 left-0 flex items-center justify-center w-full h-full transition-all duration-300 bg-transparent-black ${
+			className={`p-4 fixed top-0 left-0 flex items-center justify-center w-full h-full transition-all duration-300 bg-transparent-black ${
 				isOpen ? "opacity-100 z-50" : "opacity-0 -z-10"
 			}`}
 		>
@@ -34,7 +34,7 @@ const Modal: FC<PropsWithChildren<IModal>> = ({
 						<Title className="text-lg text-center">{title}</Title>
 
 						{!!text && (
-							<div className="text-dark-purple font-semibold text-center opacity-50">
+							<div className="text-dark-purple text-xs font-semibold text-center opacity-50">
 								{text}
 							</div>
 						)}

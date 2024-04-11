@@ -2,15 +2,28 @@
 
 import { useParams } from "next/navigation"
 import BaseLayout from "../BaseLayout"
-import companies from "@/assets/companies.assets"
 import CompanyDetail from "../companies/CompanyDetail"
+import { useEffect, useState } from "react"
+import useCompany from "@/hooks/useCompany"
+import { CompanyDB } from "@/types/auth.types"
+import Loader from "../ui/Loader"
 
 export default function CompanyDetailScreen() {
 	const { companyId: id } = useParams()
-	const company = companies[+id - 1]
+	const [company, setCompany] = useState<CompanyDB>()
+	const { getAllCompanies } = useCompany()
+	const updateCompany = async () => {
+		const cmpns = await getAllCompanies()
+
+		setCompany(cmpns[+id - 1])
+	}
+	useEffect(() => {
+		updateCompany()
+	}, [])
+
 	return (
 		<BaseLayout>
-			<CompanyDetail {...company} />
+			{company ? <CompanyDetail {...company} /> : <Loader />}
 		</BaseLayout>
 	)
 }

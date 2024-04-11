@@ -18,6 +18,10 @@ export interface UserCreate {
 }
 export interface UserUpdate extends Omit<UserCreate, "password" | "role"> {}
 export interface Company extends Omit<User, "password" | "role"> {}
+export interface CompanyDB {
+	id: number
+	company_name: string
+}
 export interface ProductWithoutID extends Omit<Product, "id"> {}
 export interface Product {
 	id: number

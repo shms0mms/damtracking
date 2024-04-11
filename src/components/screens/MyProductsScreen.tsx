@@ -15,12 +15,17 @@ export default function MyProductsScreen() {
 	}
 	useEffect(() => {
 		updateMyProducts()
-	}, [])
+	}, [myProducts])
 
 	return (
 		<BaseLayout>
 			<Container>
-				<Products products={myProducts} />
+				<Products
+					withDelete
+					setProducts={setMyProducts}
+					title={"Ваши продукты"}
+					products={myProducts}
+				/>
 			</Container>
 		</BaseLayout>
 	)

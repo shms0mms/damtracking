@@ -36,9 +36,10 @@ const useAuth = () => {
 		if (accessToken) {
 			const response = await authService.me(accessToken)
 
-			updateUser(response)
-
-			updateAutheficated(true)
+			if (!response.detail) {
+				updateUser(response)
+				updateAutheficated(true)
+			}
 			return response
 		}
 	}

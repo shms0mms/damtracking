@@ -46,7 +46,7 @@ const ProductCard: FC<Product> = ({ id, price, title }) => {
 				isOpen={isOpenModal}
 				setIsOpen={updateIsOpenModal}
 				title={"Вы точно хотите удалить этот товар из корзины?"}
-				text="После удаления - товар исчезнен из корзины"
+				text="После удаления - товар исчезнет из корзины"
 				sendResult={setResult}
 			/>
 		</div>

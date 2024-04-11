@@ -19,7 +19,7 @@ const config: Config = {
 		extend: {
 			colors,
 			gridTemplateColumns: {
-				template: "repeat(auto-fill, minmax(290px, 1fr))",
+				template: "repeat(auto-fill, minmax(250px, 1fr))",
 			},
 		},
 	},

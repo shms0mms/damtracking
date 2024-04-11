@@ -71,7 +71,7 @@ const LoginForm: FC = () => {
 			</Button>
 			<Link href={routes.register}>
 				Еще нету аккаунта?
-				<span className="text-dark-purple">Зарегистрироваться</span>
+				<span className="ml-1 text-dark-purple">Зарегистрироваться</span>
 			</Link>
 			<AuthToaster />
 		</AdaptivForm>

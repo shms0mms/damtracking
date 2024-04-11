@@ -9,8 +9,10 @@ const useCompany = () => {
 
 	const getAllCompanies = async () => {
 		const accessToken = get(ACCESS_TOKEN_NAME)
+
 		if (accessToken) {
 			const response = await companiesService.getAllCompanies(accessToken)
+
 			return response
 		}
 	}

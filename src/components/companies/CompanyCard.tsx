@@ -1,44 +1,57 @@
-import { Company } from "@/types/auth.types"
+"use client"
+import { CompanyDB, Product } from "@/types/auth.types"
 import { Truck } from "lucide-react"
-import { FC } from "react"
+import { FC, useEffect, useState } from "react"
 import Title from "../ui/Title"
-import Button from "../ui/Button"
 import Link from "../ui/Link"
 import { routes } from "@/constants/routes.constants"
+import useCompany from "@/hooks/useCompany"
 
-const CompanyCard: FC<Company> = ({
-	company_name,
-	email,
-	first_name,
-	id,
-	second_name,
-	third_name,
-	username,
-}) => {
+const CompanyCard: FC<CompanyDB> = ({ company_name, id }) => {
+	const [products, setProducts] = useState<Product[]>([])
+	const { getProductsFromCompanyId } = useCompany()
+	const updateProducts = async () => {
+		const prdcts = await getProductsFromCompanyId(id)
+		setProducts(prdcts)
+	}
+	useEffect(() => {
+		updateProducts()
+	}, [])
 	return (
 		<div className="flex flex-col gap-5">
 			<div className="flex items-center justify-between w-[50%]">
 				<div className="font-semibold flex items-center gap-2 text-xl">
 					<Truck /> {company_name}
 				</div>
-				<div className="opacity-50 text-sm font-bold">{username}</div>
 			</div>
 			<div className="flex flex-col gap-4">
 				<div>
-					<Title className="text-sm">
+					<Title className="text-base mb-3">
 						Список недавно добавленных продуктов
 					</Title>
-					<div className="flex flex-col gap-3 mb-3"># Продукты</div>
+					<div className="flex flex-col gap-3 mb-7">
+						{products && products.length ? (
+							products.slice(0, 5).map(p => (
+								<Link
+									href={routes.product(p.id)}
+									className="before:absolute before:left-[-8px] before:top-1/2 before:rounded-[50%] before:-translate-y-1/2 before:content-[''] relative before:w-1 before:h-1 before:bg-main"
+									key={p.id}
+								>
+									Название товара:{" "}
+									<span className="text-dark-purple">{p.title}</span>
+								</Link>
+							))
+						) : (
+							<div>Продуктов пока нету</div>
+						)}
+					</div>
 
 					<Link href={routes.company(id)} className="text-dark-purple">
-						Смотреть больше продуктов &rarr;{" "}
+						{products && products.length
+							? "Смотреть больше продуктов"
+							: "Смотреть больше"}{" "}
+						&rarr;{" "}
 					</Link>
-				</div>
-				<div className="flex flex-col gap-1 text-right w-[50%]">
-					<div className="font-semibold">Владелец компании:</div>
-					<div className="text-dark-purple">
-						{first_name} {second_name} {third_name}
-					</div>
 				</div>
 			</div>
 		</div>

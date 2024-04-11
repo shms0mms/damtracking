@@ -36,7 +36,7 @@ const SideBar: FC = ({}) => {
 				classNameOnUnTouch="left-[-100%]"
 				status="x"
 				className={`transition-all overflow-auto flex flex-col w-full min-h-full z-[100] bg-white  ${
-					isSmall && "-left-full absolute top-0"
+					isSmall && "-left-full fixed top-0"
 				}`}
 			>
 				<div
