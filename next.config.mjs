@@ -15,7 +15,6 @@ const nextConfig = {
 
 		return config
 	},
-
 	env: {
 		NEXT_PUBLIC_APP_API_KEY: process.env.NEXT_PUBLIC_APP_API_KEY,
 		NEXT_PUBLIC_APP_API_URL: process.env.NEXT_PUBLIC_APP_API_URL,

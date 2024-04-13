@@ -3,7 +3,7 @@ const scrollToBlock = (term: string) => {
 
 	element?.scrollIntoView({
 		behavior: "smooth",
-		block: "start",
+		block: "center",
 	})
 }
 

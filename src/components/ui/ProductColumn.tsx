@@ -12,6 +12,7 @@ import Square from "./Square"
 import useCompany from "@/hooks/useCompany"
 import { ReactFunction } from "@/types/app.types"
 import useCart from "@/hooks/useCart"
+import { Toaster, toast } from "sonner"
 
 interface IProductColumn extends Product {
 	withDelete?: boolean
@@ -57,20 +58,31 @@ const ProductColumn: FC<IProductColumn> = ({
 			</div>
 			<div className="flex items-center justify-between gap-2">
 				{withDelete ? (
-					<Square onClick={() => updateIsOpenModal(true)}>
+					<Square
+						className="flex items-center gap-2 text-dark-purple font-semibold"
+						onClick={() => updateIsOpenModal(true)}
+					>
 						<Trash width={16} height={16} color={colors.red} />
+						Удалить товар
 					</Square>
 				) : (
-					<Square onClick={() => addProduct(id)}>
+					<Square
+						onClick={() => {
+							addProduct(id)
+							toast(`Товар успешно добавлен в корзину`)
+						}}
+					>
 						<ShoppingCart color={colors["dark-purple"]} />
 					</Square>
 				)}
-				<Link
-					className="text-right text-dark-purple transition-all duration-300 hover:text-purple"
-					href={routes.product(id)}
-				>
-					Читать больше &rarr;
-				</Link>
+				{!withDelete && (
+					<Link
+						className="text-right text-dark-purple transition-all duration-300 hover:text-purple"
+						href={routes.product(id)}
+					>
+						Читать больше &rarr;
+					</Link>
+				)}
 			</div>
 			<Confirm
 				isOpen={isOpenModal}
@@ -79,6 +91,7 @@ const ProductColumn: FC<IProductColumn> = ({
 				text="После удаления товара - он исчезнет"
 				sendResult={setResult}
 			/>
+			<Toaster expand toastOptions={{ className: "auth-toast" }} />
 		</div>
 	)
 }

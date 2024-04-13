@@ -66,8 +66,8 @@ const RegisterForm: FC = () => {
 			toast("Вы успешно зарегистрировались")
 			setTimeout(() => {
 				if (user?.role === "customer") push(routes.companies)
-				else if (user?.role === "company") push(routes.select)
-			}, 2000)
+				else if (user?.role === "company") push(routes["create-address"])
+			}, 1000)
 		}
 	}
 	return (

@@ -9,21 +9,15 @@ import { AppContext } from "@/context/AppProvider"
 import { UserRole } from "@/types/auth.types"
 
 const MapHeader: FC = ({}) => {
-	const {
-		quantityPoints,
-		quantitySelectedPoints,
-		movementMethod,
-		updateMovementMethod,
-	} = useContext(CompanyContext)
+	const { quantityPoints, movementMethod, updateMovementMethod } =
+		useContext(CompanyContext)
 	const { user } = useContext(AppContext)
 	const role: UserRole | undefined = user?.role
 	const company_name = user?.company_name
 	const size = 26
 	const column = "flex items-center justify-between gap-2"
 	const active = "bg-purple"
-	const isCar = movementMethod === "car"
-	const isBus = movementMethod === "bus"
-	const isFoot = movementMethod === "foot"
+	const isCar = movementMethod === "DRIVING"
 	const hover = "hover:bg-violet-300 transition-all duration-300"
 	return (
 		<>
@@ -34,17 +28,9 @@ const MapHeader: FC = ({}) => {
 							<Title className="text-base">Способ передвижения</Title>
 							<div className="flex items-center gap-4">
 								<Square
-									onClick={() => updateMovementMethod("foot")}
-									className={isFoot ? active : hover}
-								>
-									<Footprints
-										width={size}
-										height={size}
-										color={isFoot ? colors.light : colors["dark-purple"]}
-									/>
-								</Square>
-								<Square
-									onClick={() => updateMovementMethod("car")}
+									onClick={() =>
+										updateMovementMethod("DRIVING" as google.maps.TravelMode)
+									}
 									className={isCar ? active : hover}
 								>
 									<Car
@@ -53,7 +39,7 @@ const MapHeader: FC = ({}) => {
 										color={isCar ? colors.light : colors["dark-purple"]}
 									/>
 								</Square>
-								<Square
+								{/* <Square
 									onClick={() => updateMovementMethod("bus")}
 									className={isBus ? active : hover}
 								>
@@ -62,24 +48,14 @@ const MapHeader: FC = ({}) => {
 										height={size}
 										color={isBus ? colors.light : colors["dark-purple"]}
 									/>
-								</Square>
+								</Square> */}
 							</div>
 						</div>
 					)}
 					<div className="flex w-full justify-between">
 						<div className="flex flex-col gap-2">
 							<div className={column}>
-								<Title className="text-sm">
-									Количество выбранных пунктов выдачи
-								</Title>
-								<span className="font-bold text-dark-purple">
-									{quantitySelectedPoints}
-								</span>
-							</div>
-							<div className={column}>
-								<Title className="text-sm">
-									Суммарное количество ваших пунктов выдачи
-								</Title>
+								<Title className="text-sm">Количество пунктов выдачи</Title>
 								<span className="font-bold text-dark-purple">
 									{quantityPoints}
 								</span>

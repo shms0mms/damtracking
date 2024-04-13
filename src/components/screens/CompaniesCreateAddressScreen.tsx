@@ -1,5 +1,5 @@
 import BaseLayout from "../BaseLayout"
-import Map from "../ui/Map"
+import Map from "../ui/CompanyMap"
 
 export default function CompaniesSelectScreen() {
 	return (

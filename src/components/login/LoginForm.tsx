@@ -46,8 +46,8 @@ const LoginForm: FC = () => {
 			setFormError(undefined)
 			setTimeout(() => {
 				if (user?.role === "customer") push(routes.companies)
-				else if (user?.role === "company") push(routes.select)
-			}, 2000)
+				else if (user?.role === "company") push(routes["create-address"])
+			}, 1000)
 		}
 	}
 
@@ -71,7 +71,7 @@ const LoginForm: FC = () => {
 			</Button>
 			<Link href={routes.register}>
 				Еще нету аккаунта?
-				<span className="ml-1 text-dark-purple">Зарегистрироваться</span>
+				<span className="ml-1text-dark-purple">Зарегистрироваться</span>
 			</Link>
 			<AuthToaster />
 		</AdaptivForm>

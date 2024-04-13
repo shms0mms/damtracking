@@ -42,7 +42,7 @@ const CompanyCard: FC<CompanyDB> = ({ company_name, id }) => {
 								</Link>
 							))
 						) : (
-							<div>Продуктов пока нету</div>
+							<div className="text-dark-purple">Продуктов пока нету</div>
 						)}
 					</div>
 

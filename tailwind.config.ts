@@ -20,6 +20,7 @@ const config: Config = {
 			colors,
 			gridTemplateColumns: {
 				template: "repeat(auto-fill, minmax(250px, 1fr))",
+				template2: "repeat(auto-fill, minmax(450px, 1fr))",
 			},
 		},
 	},

@@ -6,17 +6,20 @@ import { FC, useEffect, useState } from "react"
 import Products from "../ui/Products"
 
 const CompanyDetail: FC<CompanyDB> = ({ company_name, id }) => {
+	const [isLoading, updateIsLoading] = useState(false)
 	const [products, setProducts] = useState<Product[]>([])
 	const { getProductsFromCompanyId } = useCompany()
 	const updateProducts = async () => {
+		updateIsLoading(true)
 		const prdcts = await getProductsFromCompanyId(id)
 		setProducts(prdcts)
+		updateIsLoading(false)
 	}
 	useEffect(() => {
 		updateProducts()
 	}, [])
 	return (
-		<div className="p-4">
+		<div className="p-4 w-full h-full">
 			<div className="font-semibold flex items-center gap-2 text-xl">
 				<Truck /> {company_name}
 			</div>
@@ -24,6 +27,7 @@ const CompanyDetail: FC<CompanyDB> = ({ company_name, id }) => {
 				products={products}
 				title="Товары этой компании"
 				setProducts={setProducts}
+				isLoading={isLoading}
 			/>
 		</div>
 	)

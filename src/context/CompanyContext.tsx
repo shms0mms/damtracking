@@ -1,13 +1,13 @@
 import { ReactFunction } from "@/types/app.types"
 import { createContext, useState } from "react"
-export type MovementMethod = "foot" | "bus" | "car"
+export type MovementMethod = "DRIVING" | "bus" | "car"
 export type TCompanyContext = {
 	quantityPoints: number
 	updateQuantityPoints: ReactFunction<number>
 	arrayCoords: number[][]
 	updateArrayCoords: ReactFunction<number[][]>
-	movementMethod: MovementMethod
-	updateMovementMethod: ReactFunction<MovementMethod>
+	movementMethod: google.maps.TravelMode
+	updateMovementMethod: ReactFunction<google.maps.TravelMode>
 	quantitySelectedPoints: number
 	updateQuantitySelectedPoints: ReactFunction<number>
 }
@@ -21,7 +21,7 @@ const CompanyProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
 		useState<number>(0)
 	const [arrayCoords, updateArrayCoords] = useState<number[][]>([])
 	const [movementMethod, updateMovementMethod] =
-		useState<MovementMethod>("foot")
+		useState<google.maps.TravelMode>("DRIVING" as google.maps.TravelMode)
 	const value: TCompanyContext = {
 		quantityPoints,
 		updateQuantityPoints,

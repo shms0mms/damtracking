@@ -1,6 +1,5 @@
 export const routes = {
 	register: "/auth/register",
-	select: "/companies/select",
 	"create-address": "/companies/address/create",
 	companies: "/companies/all",
 	company: (companyId: number) => `/companies/${companyId}`,
@@ -12,7 +11,7 @@ export const routes = {
 	cart: "/cart",
 	settings: "/auth/settings",
 	vk: "https://vk.com/pizdscc",
-	order: "/cart/order",
+	order: (companyId: number) => `/cart/order/${companyId}`,
 	product: (productId: number) => `/companies/products/${productId}`,
 	"create-product": "/companies/products/create",
 	"my-products": "/companies/products/my",

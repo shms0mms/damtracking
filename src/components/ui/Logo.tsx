@@ -12,7 +12,7 @@ const Logo: FC = ({}) => {
 	const { isDecreased } = useContext(AppContext)
 	const { matches: isSmall } = useMediaQuery(media.small)
 	return (
-		<Link href={routes.home}>
+		<Link className="relative z-20" href={routes.home}>
 			<Title>
 				{isDecreased && !isSmall ? <AudioWaveform /> : "Damtracking"}
 			</Title>

@@ -11,12 +11,14 @@ interface IProducts {
 	title?: string
 	setProducts: ReactFunction<Product[]>
 	withDelete?: boolean
+	isLoading?: boolean
 }
 const Products: FC<IProducts> = ({
 	products,
 	title,
 	setProducts,
 	withDelete,
+	isLoading,
 }) => {
 	const { user } = useContext(AppContext)
 
@@ -36,8 +38,12 @@ const Products: FC<IProducts> = ({
 						/>
 					))}
 				</div>
-			) : (
+			) : isLoading ? (
 				<Loader size={32} />
+			) : (
+				<div className="text-dark-purple">
+					{"Товаров у данной компании пока в продаже нету"}
+				</div>
 			)}
 		</div>
 	)

@@ -28,7 +28,7 @@ const MenuList: FC = ({}) => {
 	const addPath = {
 		id: 4,
 		icon: <Waypoints width={size} height={size} />,
-		text: "Добавить маршрут",
+		text: "Добавить пункт выдачи",
 		href: routes["create-address"],
 	}
 	const createProduct = {

@@ -10,7 +10,7 @@ const ButtonSmoothScroll: FC<PropsWithChildren<IButtonSmoothScroll>> = ({
 }) => {
 	return (
 		<button
-			className="font-bold text-purple text-sm"
+			className="font-bold text-purple text-sm decor"
 			type="button"
 			onClick={() => scrollToBlock(term)}
 		>

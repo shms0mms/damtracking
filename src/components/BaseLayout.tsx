@@ -7,6 +7,7 @@ import MapHeader from "./ui/MapHeader"
 import CompanyProvider from "@/context/CompanyContext"
 import Header from "./ui/Header"
 import CartProvider from "@/context/CartContext"
+import Footer from "./ui/Footer"
 interface IBaseLayout {
 	withMH?: boolean
 	withSB?: boolean
@@ -22,12 +23,14 @@ const BaseLayout: FC<PropsWithChildren<IBaseLayout>> = ({
 		<AppProvider>
 			<CompanyProvider>
 				<CartProvider>
-					{withH && <Header />}
-					<div className="flex h-full w-full">
-						{(withSB === undefined || withSB === true) && <SideBar />}
-						<div className={`w-full h-full ${withMH && "flex flex-col"}`}>
-							{withMH && <MapHeader />}
-							{children}
+					<div className="w-full h-full">
+						{withH && <Header />}
+						<div className="flex h-full w-full">
+							{(withSB === undefined || withSB === true) && <SideBar />}
+							<div className={`w-full h-full ${withMH && "flex flex-col"}`}>
+								{withMH && <MapHeader />}
+								{children}
+							</div>
 						</div>
 					</div>
 					<RedirectUser />

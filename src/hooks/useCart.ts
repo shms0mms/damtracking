@@ -10,7 +10,6 @@ const useCart = () => {
 
 		if (accessToken) {
 			const response = await cartService.getAllProducts(accessToken)
-			console.log(response)
 
 			return response
 		}

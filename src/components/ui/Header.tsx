@@ -10,6 +10,9 @@ import { default as NextLink } from "next/link"
 import useContext from "@/hooks/useContext"
 import { AppContext } from "@/context/AppProvider"
 import Square from "./Square"
+import { useMediaQuery } from "react-pcp-form"
+import { media } from "@/constants/media.constants"
+import MenuButton from "./MenuButton"
 const Header: FC = ({}) => {
 	const { user, isAuth } = useContext(AppContext)
 	const [scroll, setScroll] = useState(0)
@@ -20,22 +23,31 @@ const Header: FC = ({}) => {
 		window.addEventListener("scroll", handleScroll)
 		return () => window.removeEventListener("scroll", handleScroll)
 	}, [typeof window !== "undefined"])
-
+	const [isOpenMenu, updateIsOpenMenu] = useState(false)
+	const { matches: isMobile } = useMediaQuery(media.mobile)
 	return (
 		<div
 			className={`w-full ${
-				scroll > 0 ? "py-2 opacity-60" : "py-4"
-			} transition-all fixed top-0 left-0 duration-300 ease-in-out px-4 shadow-md bg-white`}
+				scroll > 0 ? "py-2" : "py-4"
+			} transition-all fixed top-0 left-0 z-10 duration-300 ease-in-out px-4 shadow-md bg-white`}
 		>
 			<div className="flex items-center justify-between gap-2">
 				<Logo />
-				<div className="flex items-center gap-10">
+				<div
+					className={`flex items-center gap-10 ${
+						isMobile &&
+						"flex-col fixed transition-all overflow-auto duration-300 z-10 pt-20 top-0 h-full w-full bg-white"
+					} ${
+						isMobile && isOpenMenu
+							? "left-0"
+							: isMobile && !isOpenMenu && "-left-full"
+					}`}
+				>
+					<ButtonSmoothScroll term="visitka">Визитка</ButtonSmoothScroll>
+					<ButtonSmoothScroll term="creators">Создатели</ButtonSmoothScroll>
 					<ButtonSmoothScroll term="advantages">
 						Преимущества
 					</ButtonSmoothScroll>
-					<ButtonSmoothScroll term="Параметр 1">Параметр 1</ButtonSmoothScroll>
-					<ButtonSmoothScroll term="Параметр 2">Параметр 2</ButtonSmoothScroll>
-					<ButtonSmoothScroll term="Параметр 3">Параметр 3</ButtonSmoothScroll>
 					{isAuth ? (
 						<NextLink
 							href={routes.settings}
@@ -52,6 +64,12 @@ const Header: FC = ({}) => {
 						</NextLink>
 					)}
 				</div>
+				{isMobile && (
+					<MenuButton
+						isMenuOpen={isOpenMenu}
+						updateIsMenuOpen={updateIsOpenMenu}
+					/>
+				)}
 			</div>
 		</div>
 	)
