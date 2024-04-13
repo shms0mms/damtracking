@@ -1,0 +1,22 @@
+version: '3.9'
+
+
+services:
+  app:
+    build: .
+    container_name: app
+    depends_on:
+      - db
+
+    ports:
+      - 8000:8000
+
+  db:
+    image: postgres
+
+    env_file:
+      - .env
+    container_name: db
+    ports:
+      - 5432:5432    
+
