@@ -9,8 +9,13 @@ import { Toaster, toast } from "sonner"
 import { AppContext } from "@/context/AppProvider"
 import useMapConnect from "@/hooks/useMapConnect"
 import { useLocalStorage } from "react-pcp-form"
+import { MY_HOME } from "@/constants/constants"
 
 interface LatLng {
+	latitude: number
+	longitude: number
+}
+interface LatLng2 {
 	lat: number
 	lng: number
 }
@@ -20,43 +25,54 @@ interface IMap {
 }
 
 const Map: FC<IMap> = ({ companyId }) => {
-	const [directionsService, setDirectionsService] =
-		useState<google.maps.DirectionsService>()
-	const [home, setHome] = useState<LatLng>()
+	const { get, set } = useLocalStorage()
+	const [home, setHome] = useState<LatLng | undefined>(get(MY_HOME))
 	const [company, setCompany] = useState<LatLng>()
-	const { movementMethod } = useContext(CompanyContext)
-	const [travelMode, setTravelMode] =
-		useState<google.maps.TravelMode>(movementMethod)
-
 	const [map, setMap] = useState<google.maps.Map | null>(null)
 	const [addresses, setAddresses] = useState<Address[]>([])
-	const { getAllPoints } = useMap()
+	const { getAllPoints, getDataFromCoords } = useMap()
 	const { user } = useContext(AppContext)
 	const [markerSetting, updateMarkerSetting] = useState<boolean>(false)
 	const { updateQuantityPoints } = useContext(CompanyContext)
-	const { get } = useLocalStorage()
 
-	const request: google.maps.DirectionsRequest = {
-		origin: home,
-		destination: company,
-		travelMode: travelMode,
+	const setMarker = (coordinate: LatLng2) => {
+		if (window.google) {
+			const marker = new window.google.maps.Marker({
+				position: coordinate,
+				map: map as google.maps.Map<Element>,
+			})
+
+			marker.addListener("click", () => {
+				setCompany({
+					latitude: marker.getPosition()?.lat() as number,
+					longitude: marker.getPosition()?.lng() as number,
+				})
+				toast(`Пункт выдачи компании: ${user?.company_name}`)
+			})
+		}
+	}
+	const getData = async () => {
+		const data = await getDataFromCoords({
+			latitude1: home?.latitude as number,
+			latitude2: company?.latitude as number,
+			longtitude1: home?.longitude as number,
+			longtitude2: company?.longitude as number,
+		})
+		console.log(data)
+		setHome(undefined)
+		setCompany(undefined)
 	}
 
-	const setMarker = (coordinate: LatLng) => {
-		const marker = new window.google.maps.Marker({
-			position: coordinate,
-			map: map as google.maps.Map<Element>,
-		})
-		marker.addListener("click", () => {
-			toast(`Пункт выдачи компании: ${user?.company_name}`)
-		})
-	}
+	useEffect(() => {
+		if (home && company) getData()
+	}, [home, company])
 	const updateAddresses = async () => {
 		const addrsss = await getAllPoints(companyId)
 
 		updateQuantityPoints(addrsss.length)
 		setAddresses(addrsss)
 	}
+
 	useEffect(() => {
 		if (addresses.length)
 			for (let i = 0; i < addresses.length; i++) {
@@ -70,6 +86,7 @@ const Map: FC<IMap> = ({ companyId }) => {
 	useEffect(() => {
 		updateAddresses()
 	}, [])
+
 	const placeMarker = useCallback(
 		(location: google.maps.LatLng, map: google.maps.Map) => {
 			if (!markerSetting) {
@@ -82,7 +99,13 @@ const Map: FC<IMap> = ({ companyId }) => {
 					},
 				})
 				updateMarkerSetting(true)
+				toast("Нажмите на нужный вам пункт выдачи")
 
+				setHome({
+					latitude: marker.getPosition()?.lat() as number,
+					longitude: marker.getPosition()?.lng() as number,
+				})
+				set(MY_HOME, home)
 				marker.addListener("click", () => {
 					toast(`Это ваше местоположение`)
 				})
@@ -94,6 +117,7 @@ const Map: FC<IMap> = ({ companyId }) => {
 		},
 		[markerSetting]
 	)
+
 	const initMap = () => {
 		const mapInstance = new window.google.maps.Map(
 			document.getElementById("map") as HTMLElement,
@@ -116,26 +140,7 @@ const Map: FC<IMap> = ({ companyId }) => {
 		// @ts-ignore
 		window["initMap"] = initMap
 	}, [])
-	useEffect(() => {
-		if (window.google) {
-			console.log(new window.google.maps.DirectionsService())
 
-			setDirectionsService(new window.google.maps.DirectionsService())
-			setHome({ lat: 41.850033, lng: -87.6500523 })
-			setCompany({ lat: 34.052235, lng: -118.243683 })
-			setTravelMode(movementMethod as google.maps.TravelMode)
-		}
-	}, [window && window?.google])
-	useEffect(() => {
-		directionsService &&
-			directionsService.route(request, (result, status) => {
-				if (status === google.maps.DirectionsStatus.OK) {
-					const directionsRenderer = new google.maps.DirectionsRenderer()
-					directionsRenderer.setMap(map)
-					directionsRenderer.setDirections(result)
-				}
-			})
-	}, [directionsService !== undefined])
 	return (
 		<div className="relative w-full h-full">
 			<div id="map" style={{ height: "100%", width: "100%" }} />

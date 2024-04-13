@@ -13,28 +13,6 @@ interface LatLng {
 	lat: number
 	lng: number
 }
-// const start = new google.maps.LatLng(41.850033, -87.6500523); // Начальная точка (Шикаго)
-// const end = new google.maps.LatLng(34.052235, -118.243683); // Конечная точка (Лос-Анджелес)
-
-// // Определяем запрос для построения маршрута
-// const request = {
-//   origin: start,
-//   destination: end,
-//   travelMode: google.maps.TravelMode.DRIVING, // Режим передвижения (в данном случае - на машине)
-// };
-
-// // Вызываем DirectionsService для получения маршрута
-// directionsService.route(request, (result, status) => {
-//   if (status === google.maps.DirectionsStatus.OK) {
-//     // Если маршрут найден, отображаем его на карте
-//     const directionsRenderer = new google.maps.DirectionsRenderer();
-//     directionsRenderer.setMap(map);
-//     directionsRenderer.setDirections(result);
-//   } else {
-//     // Если маршрут не найден или произошла ошибка, выводим сообщение об ошибке
-//     window.alert('Directions request failed due to ' + status);
-//   }
-// });
 
 function Map(): JSX.Element {
 	const [map, setMap] = useState<google.maps.Map | null>(null)
@@ -110,7 +88,6 @@ function Map(): JSX.Element {
 		setNewAddresses(state => [
 			...state,
 			{
-				id: newAddresses.length + 1,
 				latitude: location.lat(),
 				longtitude: location.lng(),
 			},
@@ -133,7 +110,6 @@ function Map(): JSX.Element {
 					if (newAddresses.length) {
 						for (let i = 0; i < newAddresses.length; i++) {
 							createAddress({
-								id: newAddresses[i].id,
 								latitude: newAddresses[i].latitude,
 								longtitude: newAddresses[i].longtitude,
 							})

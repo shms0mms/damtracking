@@ -16,10 +16,16 @@ export class MapService extends InstanceService {
 		return response.json()
 	}
 	async getDataFromCoords(coords: Coords) {
+		console.log(coords)
+
 		const response = await fetch(`${this.API_URL}/client/pay_for_distantion`, {
 			method: POST,
-			body: JSON.stringify({ ...coords }),
+			body: JSON.stringify({
+				...coords,
+			}),
 		})
+
+		return response.json()
 	}
 	async createAddress(address: Address, accessToken: string) {
 		const response = await fetch(`${this.API_URL}/company/add_address`, {

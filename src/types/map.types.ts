@@ -5,8 +5,10 @@ export interface Coords {
 	longtitude2: number
 }
 export interface Address {
-	id: number
 	latitude: number
 	longtitude: number
+}
+export interface AddressDB extends Address {
+	id: number
 }
 export type CompanyAddresses = Address[]

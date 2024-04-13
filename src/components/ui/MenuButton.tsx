@@ -10,7 +10,7 @@ const MenuButton: FC<IMenuButton> = ({ isMenuOpen, updateIsMenuOpen }) => {
 	const line = `bg-dark-purple w-full h-[1px] transition-all duration-150`
 	return (
 		<button
-			className={`relative z-20 flex w-[20px] flex-col ${
+			className={`relative z-20 flex w-[20px] h-[13px] flex-col ${
 				!isMenuOpen && "gap-1.5 justify-between"
 			}`}
 			type="button"
