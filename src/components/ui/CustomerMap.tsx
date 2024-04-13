@@ -9,7 +9,7 @@ import { Toaster, toast } from "sonner"
 import { AppContext } from "@/context/AppProvider"
 import useMapConnect from "@/hooks/useMapConnect"
 import { useLocalStorage } from "react-pcp-form"
-import { MY_HOME } from "@/constants/constants"
+import { MY_HOME_LATITUDE, MY_HOME_LONGITUDE } from "@/constants/constants"
 
 interface LatLng {
 	latitude: number
@@ -26,14 +26,20 @@ interface IMap {
 
 const Map: FC<IMap> = ({ companyId }) => {
 	const { get, set } = useLocalStorage()
-	const [home, setHome] = useState<LatLng | undefined>(get(MY_HOME))
+	const [home, setHome] = useState<LatLng | undefined>()
 	const [company, setCompany] = useState<LatLng>()
 	const [map, setMap] = useState<google.maps.Map | null>(null)
 	const [addresses, setAddresses] = useState<Address[]>([])
 	const { getAllPoints, getDataFromCoords } = useMap()
 	const { user } = useContext(AppContext)
 	const [markerSetting, updateMarkerSetting] = useState<boolean>(false)
-	const { updateQuantityPoints } = useContext(CompanyContext)
+	const {
+		updateQuantityPoints,
+		movementMethod,
+		setDistation,
+		setPrice,
+		setTime,
+	} = useContext(CompanyContext)
 
 	const setMarker = (coordinate: LatLng2) => {
 		if (window.google) {
@@ -58,8 +64,10 @@ const Map: FC<IMap> = ({ companyId }) => {
 			longtitude1: home?.longitude as number,
 			longtitude2: company?.longitude as number,
 		})
-		console.log(data)
-		setHome(undefined)
+
+		setDistation(Math.round(data.distantion))
+		setPrice(movementMethod === "CAR" ? data.taxi_price : data.bus_price)
+		setTime(movementMethod === "CAR" ? data.taxi_time : data.bus_time)
 		setCompany(undefined)
 	}
 
@@ -98,14 +106,12 @@ const Map: FC<IMap> = ({ companyId }) => {
 						scaledSize: new google.maps.Size(20, 20),
 					},
 				})
-				updateMarkerSetting(true)
 				toast("Нажмите на нужный вам пункт выдачи")
 
 				setHome({
 					latitude: marker.getPosition()?.lat() as number,
 					longitude: marker.getPosition()?.lng() as number,
 				})
-				set(MY_HOME, home)
 				marker.addListener("click", () => {
 					toast(`Это ваше местоположение`)
 				})
@@ -113,6 +119,8 @@ const Map: FC<IMap> = ({ companyId }) => {
 					marker.setMap(null)
 				}
 				marker.addListener("rightclick", onRightClick)
+
+				updateMarkerSetting(true)
 			}
 		},
 		[markerSetting]
@@ -128,7 +136,7 @@ const Map: FC<IMap> = ({ companyId }) => {
 		)
 
 		mapInstance.addListener("click", (event: google.maps.MouseEvent) => {
-			placeMarker(event.latLng, mapInstance)
+			if (!markerSetting) placeMarker(event.latLng, mapInstance) // Вот здесь marketSetting не изменяется
 		})
 
 		setMap(mapInstance)
@@ -146,7 +154,11 @@ const Map: FC<IMap> = ({ companyId }) => {
 			<div id="map" style={{ height: "100%", width: "100%" }} />
 			<Button
 				onClick={() => {
-					toast("Ваше местоположение успешно сохранено")
+					if (home) {
+						set(MY_HOME_LATITUDE, home.latitude)
+						set(MY_HOME_LONGITUDE, home.longitude)
+						toast("Ваше местоположение успешно сохранено")
+					}
 				}}
 				className="absolute bottom-4 left-4"
 			>
