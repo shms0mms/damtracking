@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from .utils import check_address
 from .models import Points, Products
-from .schema import ProductCreate, ProductShow, ProductUpdate, ShowPoints
+from .schema import CreatePoints, ProductCreate, ProductShow, ProductUpdate, ShowPoints
 
 
 
@@ -29,7 +29,7 @@ async def get_current_company( me:User = Depends(get_current_user)):
 
 
 @app.post("/add_address")
-async def check_addres(address:ShowPoints, me:User = Depends(get_current_company),session:AsyncSession = Depends(get_session)):
+async def check_addres(address:CreatePoints, me:User = Depends(get_current_company),session:AsyncSession = Depends(get_session)):
     
     
 

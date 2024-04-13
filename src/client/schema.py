@@ -22,7 +22,7 @@ class ShowProducts(BaseModel):
     
     desc:str
     
-    
+    company_id: int
     price:float
     
 
@@ -30,15 +30,8 @@ class ShowProducts(BaseModel):
 class Distation(BaseModel):
     
     latitude1:float
-    
-    
     longtitude1:float
-    
-    
-    
     latitude2:float
-    
-    
     longtitude2:float
     
     

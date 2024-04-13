@@ -38,7 +38,6 @@ async def get_current_client( me:User = Depends(get_current_user)):
 async def all_company(me = Depends(get_current_client),session:AsyncSession = Depends(get_session)):
     
     company = await session.scalars(select(User).options(selectinload(User.points),selectinload(User.products), selectinload(User.basket)).where(User.role == "company"))
-    
     return company.all()
     
 
@@ -57,19 +56,15 @@ async def points_for_company_company(company_id:int,me:User = Depends(get_curren
     return points.all()
     
     
-@app.get("/product_for_company/{product_id}", response_model=list[ShowProducts])
+@app.get("/product_for_company/{product_id}")
 async def points_for_company_company(product_id:int,me:User = Depends(get_current_client),session:AsyncSession = Depends(get_session)):
     points =await session.scalar(select(Products).where(Products.id == product_id)) 
-    
     return points
     
 
 @app.post("/add/product/{product_id}")
 async def add_product(product_id:int,me:User = Depends(get_current_client),session:AsyncSession = Depends(get_session)):
-    
-
     product = await session.scalar(select(Products).options(selectinload(Products.company_2)).where(Products.id == product_id)        )
-
     if not product:
             raise HTTPException(status_code=404, detail={"status_code":404, "detail":"Do not have this product"})
 

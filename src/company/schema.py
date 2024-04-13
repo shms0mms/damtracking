@@ -7,7 +7,11 @@ class ShowPoints(BaseModel):
     latitude:float
     
     longtitude:float
-
+class CreatePoints(BaseModel):
+    
+    latitude:float
+    
+    longtitude:float
 
 class ProductCreate(BaseModel):
 
